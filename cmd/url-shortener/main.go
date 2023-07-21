@@ -7,6 +7,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/teatou/url-shortener/internal/config"
+	"github.com/teatou/url-shortener/internal/http-server/handlers/url/delete"
 	"github.com/teatou/url-shortener/internal/http-server/handlers/url/redirect"
 	"github.com/teatou/url-shortener/internal/http-server/handlers/url/save"
 	"github.com/teatou/url-shortener/internal/http-server/middleware/mwLogger"
@@ -40,6 +41,7 @@ func main() {
 
 	router.Post("/url", save.New(log, storage))
 	router.Get("/{alias}", redirect.New(log, storage))
+	router.Delete("/{alias}", delete.New(log, storage))
 
 	log.Info("starting server", slog.String("address", cfg.Address))
 
